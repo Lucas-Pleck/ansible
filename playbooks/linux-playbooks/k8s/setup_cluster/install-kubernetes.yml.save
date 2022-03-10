@@ -1,0 +1,30 @@
+- name: Configuring networks on hosts...
+  hosts: all
+  roles:
+    - configure-network-rules
+
+- name: Installing kubectl on master node...
+  h: control1
+  roles:
+    - install-kubectl
+
+- name: Deploying kubernetes cluster...
+  hosts: control1
+  roles:
+    - deploy-kubernetes
+
+- name: Getting token from the master node...
+  hosts: control1
+  roles:
+    - get-join-command
+
+- name: Joining workers to the cluster...
+  hosts: nodes
+  roles:
+    - join-cluster
+
+- name: Starting installation of Helm...
+  hosts: control1
+  roles:
+    - install-helm
+
